@@ -6,12 +6,12 @@
 
 Name: %name
 Version: 0.0.5
-Release: %mkrel 1
+Release: %mkrel 2
 License: LGPL
 Group:   System/Libraries
 Summary: Library for adding support for consumer fingerprint readers
 Source: http://prdownloads.sourceforge.net/fprint/libfprint-0.0.5.tar.bz2
-BuildRequires: libusb-devel glib2-devel ImageMagick-devel openssl-devel
+BuildRequires: libusb-devel glib2-devel imagemagick-devel openssl-devel
 
 %description
 libfprint is an open source software library designed to make it easy for
