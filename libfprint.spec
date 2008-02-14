@@ -6,7 +6,7 @@
 
 Name: %name
 Version: 0.0.5
-Release: %mkrel 2
+Release: %mkrel 4
 License: LGPL
 Group:   System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
