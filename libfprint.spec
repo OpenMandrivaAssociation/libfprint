@@ -9,6 +9,7 @@ Version: 0.0.5
 Release: %mkrel 2
 License: LGPL
 Group:   System/Libraries
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Library for adding support for consumer fingerprint readers
 Source: http://prdownloads.sourceforge.net/fprint/libfprint-0.0.5.tar.bz2
 BuildRequires: libusb-devel glib2-devel imagemagick-devel openssl-devel
