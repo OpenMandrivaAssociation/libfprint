@@ -5,13 +5,13 @@
 %define libnamedevel %mklibname -d %{soname}
 
 Name: %name
-Version: 0.0.5
-Release: %mkrel 4
+Version: 0.0.6
+Release: %mkrel 1
 License: LGPL
 Group:   System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Library for adding support for consumer fingerprint readers
-Source: http://prdownloads.sourceforge.net/fprint/libfprint-0.0.5.tar.bz2
+Source: http://prdownloads.sourceforge.net/fprint/libfprint-%{version}.tar.bz2
 BuildRequires: libusb-devel glib2-devel imagemagick-devel openssl-devel
 
 %description
