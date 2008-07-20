@@ -60,7 +60,7 @@ applications that support finger print readers.
 %setup -q
 
 %build
-%configure
+%configure2_5x
 %make
 
 %install
