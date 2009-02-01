@@ -7,10 +7,11 @@
 Name: %name
 Version: 0.0.6
 Release: %mkrel 3
-License: LGPL
+License: LGPLv2+
 Group:   System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Library for adding support for consumer fingerprint readers
+URL: http://www.reactivated.net/fprint/wiki/Main_Page
 Source: http://prdownloads.sourceforge.net/fprint/libfprint-%{version}.tar.bz2
 BuildRequires: libusb-devel glib2-devel imagemagick-devel openssl-devel
 
