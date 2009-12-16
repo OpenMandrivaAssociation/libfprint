@@ -23,7 +23,7 @@ Patch2:     0001-Add-gdk-pixbuf-support.patch
 Source1:    aes1610.c
 Patch3:     libfprint-aes1610-driver.patch
 BuildRequires: libusb-devel glib2-devel imagemagick-devel openssl-devel
-
+BuildRequires: doxygen
 %description
 libfprint is an open source software library designed to make it easy for
 application developers to add support for consumer fingerprint readers to their
