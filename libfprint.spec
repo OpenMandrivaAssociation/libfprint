@@ -4,15 +4,24 @@
 %define libname %mklibname %{soname} %{major}
 %define libnamedevel %mklibname -d %{soname}
 
+%define pre pre2
+
 Name: %name
-Version: 0.0.6
-Release: %mkrel 4
+Version: 0.1.0
+Release: %mkrel 0.%pre.1
 License: LGPLv2+
 Group:   System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Summary: Library for adding support for consumer fingerprint readers
 URL: http://www.reactivated.net/fprint/wiki/Main_Page
-Source: http://prdownloads.sourceforge.net/fprint/libfprint-%{version}.tar.bz2
+Source: http://prdownloads.sourceforge.net/fprint/libfprint-%{version}-%pre.tar.bz2
+# http://thread.gmane.org/gmane.linux.fprint/1321
+Patch1:     0001-Add-udev-rules-to-set-devices-to-autosuspend.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=472103
+Patch2:     0001-Add-gdk-pixbuf-support.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=499732
+Source1:    aes1610.c
+Patch3:     libfprint-aes1610-driver.patch
 BuildRequires: libusb-devel glib2-devel imagemagick-devel openssl-devel
 
 %description
@@ -42,6 +51,14 @@ libfprint is an open source software library designed to make it easy for
 application developers to add support for consumer fingerprint readers to their
 software.
 
+%files -n %{libname}
+%defattr(-,root,root)
+%{_libdir}/libfprint.so.%{major}*
+%{_datadir}/hal/fdi/information/20thirdparty/10-fingerprint-reader-fprint.fdi
+%{_sysconfdir}/udev/rules.d/60-fprint-autosuspend.rules
+
+#--------------------------------------------------------------------
+
 %package -n %{libnamedevel}
 License: GPL
 Group:   System/Libraries
@@ -57,12 +74,29 @@ software.
 This package includes the headers and development library for building
 applications that support finger print readers.
 
+%files -n %{libnamedevel}
+%{_includedir}/libfprint
+%{_libdir}/libfprint.la
+%{_libdir}/libfprint.so
+%{_libdir}/pkgconfig/libfprint.pc
+
+#--------------------------------------------------------------------
+
 %prep
-%setup -q
+%setup -q -n %{name}-0.1.0-pre2
+%patch1 -p1
+%patch2 -p1
+cp -a %{SOURCE1} libfprint/drivers
+%patch3 -p1 -b .aes1610
 
 %build
-%configure2_5x
-%make
+autoreconf -f -i
+%configure --disable-static 
+make %{?_smp_mflags}
+pushd doc
+make docs
+popd
+
 
 %install
 rm -Rf %{buildroot}
@@ -70,14 +104,3 @@ rm -Rf %{buildroot}
 
 %clean
 rm -Rf %{buildroot}
-
-%files -n %{libname}
-%defattr(-,root,root)
-%{_libdir}/libfprint.so.%{major}*
-
-%files -n %{libnamedevel}
-%{_includedir}/libfprint
-%{_libdir}/libfprint.a
-%{_libdir}/libfprint.la
-%{_libdir}/libfprint.so
-%{_libdir}/pkgconfig/libfprint.pc
