@@ -8,7 +8,7 @@
 
 Name: %name
 Version: 0.1.0
-Release: %mkrel 0.%pre.1
+Release: %mkrel 0.%pre.2
 License: LGPLv2+
 Group:   System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -41,10 +41,13 @@ Features:
     * Supports enrollment/verification - enrolling a print from a known user,
       and then later comparing a live scan to the enrolled print 
 
+#--------------------------------------------------------------------
+
 %package -n %{libname}
 License: GPL
 Group:   System/Libraries
 Summary: Library for adding support for consumer fingerprint readers
+Provides: %name = %version-%release
 
 %description -n %{libname}
 libfprint is an open source software library designed to make it easy for
