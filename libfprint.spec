@@ -8,7 +8,7 @@
 
 Name: %name
 Version: 0.1.0
-Release: %mkrel 0.%pre.3
+Release: %mkrel 0.%pre.4
 License: LGPLv2+
 Group:   System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -94,8 +94,8 @@ cp -a %{SOURCE1} libfprint/drivers
 
 %build
 autoreconf -f -i
-%configure --disable-static 
-make %{?_smp_mflags}
+%configure2_5x --disable-static 
+%make
 pushd doc
 make docs
 popd
