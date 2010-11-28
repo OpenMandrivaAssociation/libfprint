@@ -8,7 +8,7 @@
 
 Name: %name
 Version: 0.1.0
-Release: %mkrel 0.%pre.4
+Release: %mkrel 0.%pre.5
 License: LGPLv2+
 Group:   System/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
