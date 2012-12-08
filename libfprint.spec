@@ -1,29 +1,23 @@
-%define name libfprint
-%define soname fprint
 %define major 0
-%define libname %mklibname %{soname} %{major}
-%define libnamedevel %mklibname -d %{soname}
+%define libname %mklibname fprint %{major}
+%define libnamedevel %mklibname -d fprint
 
-%define pre pre2
+Name:		libfprint
+Version:	0.4.0
+Release:	1
+Summary:	Library for adding support for consumer fingerprint readers
+License:	LGPLv2+
+Group:		System/Libraries
+URL:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
+Source0:	http://people.freedesktop.org/~hadess/%{name}-%{version}.tar.bz2
+Patch0:		libfprint-0.4.0-global-vars.patch
+BuildRequires:	pkgconfig(libusb)
+BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
+BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(nss)
+BuildRequires:	doxygen
 
-Name: %name
-Version: 0.1.0
-Release: %mkrel 0.%pre.6
-License: LGPLv2+
-Group:   System/Libraries
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Summary: Library for adding support for consumer fingerprint readers
-URL: http://www.reactivated.net/fprint/wiki/Main_Page
-Source: http://prdownloads.sourceforge.net/fprint/libfprint-%{version}-%pre.tar.bz2
-# http://thread.gmane.org/gmane.linux.fprint/1321
-Patch1:     0001-Add-udev-rules-to-set-devices-to-autosuspend.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=472103
-Patch2:     0001-Add-gdk-pixbuf-support.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=499732
-Source1:    aes1610.c
-Patch3:     libfprint-aes1610-driver.patch
-BuildRequires: libusb-devel glib2-devel imagemagick-devel openssl-devel
-BuildRequires: doxygen
 %description
 libfprint is an open source software library designed to make it easy for
 application developers to add support for consumer fingerprint readers to their
@@ -44,10 +38,10 @@ Features:
 #--------------------------------------------------------------------
 
 %package -n %{libname}
-License: GPL
-Group:   System/Libraries
-Summary: Library for adding support for consumer fingerprint readers
-Provides: %name = %version-%release
+License:	GPL
+Group:		System/Libraries
+Summary:	Library for adding support for consumer fingerprint readers
+Provides:	%{name} = %{version}-%{release}
 
 %description -n %{libname}
 libfprint is an open source software library designed to make it easy for
@@ -55,19 +49,17 @@ application developers to add support for consumer fingerprint readers to their
 software.
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/libfprint.so.%{major}*
-%{_datadir}/hal/fdi/information/20thirdparty/10-fingerprint-reader-fprint.fdi
 %{_sysconfdir}/udev/rules.d/60-fprint-autosuspend.rules
 
 #--------------------------------------------------------------------
 
 %package -n %{libnamedevel}
-License: GPL
-Group:   System/Libraries
-Summary: Development library for adding support for consumer fingerprint readers
-Requires: %libname = %{version}-%{release}
-Provides: %name-devel = %{version}-%{release}
+License:	GPL
+Group:		System/Libraries
+Summary:	Development library for adding support for consumer fingerprint readers
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{libnamedevel}
 libfprint is an open source software library designed to make it easy for
@@ -79,22 +71,18 @@ applications that support finger print readers.
 
 %files -n %{libnamedevel}
 %{_includedir}/libfprint
-%{_libdir}/libfprint.la
 %{_libdir}/libfprint.so
 %{_libdir}/pkgconfig/libfprint.pc
 
 #--------------------------------------------------------------------
 
 %prep
-%setup -q -n %{name}-0.1.0-pre2
-%patch1 -p1
-%patch2 -p1
-cp -a %{SOURCE1} libfprint/drivers
-%patch3 -p1 -b .aes1610
+%setup -q
+%patch0 -p1
 
 %build
 autoreconf -f -i
-%configure2_5x --disable-static 
+%configure2_5x --disable-static
 %make
 pushd doc
 make docs
@@ -102,8 +90,66 @@ popd
 
 
 %install
-rm -Rf %{buildroot}
 %makeinstall_std
 
-%clean
-rm -Rf %{buildroot}
+%changelog
+* Fri Apr 29 2011 Oden Eriksson <oeriksson@mandriva.com> 0.1.0-0.pre2.6mdv2011.0
++ Revision: 660250
+- mass rebuild
+
+* Sun Nov 28 2010 Oden Eriksson <oeriksson@mandriva.com> 0.1.0-0.pre2.5mdv2011.0
++ Revision: 602543
+- rebuild
+
+* Fri Apr 09 2010 Funda Wang <fwang@mandriva.org> 0.1.0-0.pre2.4mdv2010.1
++ Revision: 533315
+- rebuild
+
+* Fri Feb 26 2010 Oden Eriksson <oeriksson@mandriva.com> 0.1.0-0.pre2.3mdv2010.1
++ Revision: 511586
+- rebuilt against openssl-0.9.8m
+
+* Wed Dec 16 2009 Nicolas Lécureuil <nlecureuil@mandriva.com> 0.1.0-0.pre2.2mdv2010.1
++ Revision: 479570
+- Add buildrequire
+- make %%libname provide %%name
+- Fix patches
+- Update to 0.1.0 pre2
+  Sync patches with fedora
+  Fix file list
+
+* Sun Sep 13 2009 Thierry Vignaud <tv@mandriva.org> 0.0.6-4mdv2010.0
++ Revision: 438595
+- rebuild
+
+  + Funda Wang <fwang@mandriva.org>
+    - add URL
+
+* Sat Jan 31 2009 Funda Wang <fwang@mandriva.org> 0.0.6-3mdv2009.1
++ Revision: 335787
+- rebuild
+
+* Sun Jul 20 2008 Funda Wang <fwang@mandriva.org> 0.0.6-2mdv2009.0
++ Revision: 238915
+- rebuild against latest imagemagick
+- use configure2_5x
+
+* Sat Jun 21 2008 Buchan Milne <bgmilne@mandriva.org> 0.0.6-1mdv2009.0
++ Revision: 227706
+- New version 0.0.6
+
+* Thu Feb 14 2008 Thierry Vignaud <tv@mandriva.org> 0.0.5-4mdv2008.1
++ Revision: 168578
+- rebuilt against new imagemagick libs
+- fix no-buildroot-tag
+
+* Tue Jan 08 2008 Oden Eriksson <oeriksson@mandriva.com> 0.0.5-2mdv2008.1
++ Revision: 146505
+- rebuilt against new imagemagick libs (6.3.7)
+
+* Sat Dec 08 2007 Buchan Milne <bgmilne@mandriva.org> 0.0.5-1mdv2008.1
++ Revision: 116482
+- Buildrequire openssl-devel
+- import libfprint
+
+
