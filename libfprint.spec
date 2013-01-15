@@ -11,6 +11,7 @@ Group:		System/Libraries
 URL:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
 Source0:	http://people.freedesktop.org/~hadess/%{name}-%{version}.tar.bz2
 Patch0:		libfprint-0.4.0-global-vars.patch
+Patch1:		libfprint-automake-1.13.patch
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
@@ -78,7 +79,7 @@ applications that support finger print readers.
 
 %prep
 %setup -q
-%patch0 -p1
+%apply_patches
 
 %build
 autoreconf -f -i
