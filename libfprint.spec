@@ -15,6 +15,7 @@ BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(nss)
+BuildRequires:	pkgconfig(udev)
 BuildRequires:	doxygen
 
 %description
