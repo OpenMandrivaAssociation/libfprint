@@ -3,15 +3,13 @@
 %define libnamedevel %mklibname -d fprint
 
 Name:		libfprint
-Version:	0.4.0
+Version:	0.5.0
 Release:	1
 Summary:	Library for adding support for consumer fingerprint readers
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
-Source0:	http://people.freedesktop.org/~hadess/%{name}-%{version}.tar.bz2
-Patch0:		libfprint-0.4.0-global-vars.patch
-Patch1:		libfprint-automake-1.13.patch
+Source0:	http://people.freedesktop.org/~hadess/%{name}-%{version}.tar.xz
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
@@ -51,7 +49,7 @@ software.
 
 %files -n %{libname}
 %{_libdir}/libfprint.so.%{major}*
-%{_sysconfdir}/udev/rules.d/60-fprint-autosuspend.rules
+%{_udevrulesdir}/60-fprint-autosuspend.rules
 
 #--------------------------------------------------------------------
 
@@ -82,7 +80,6 @@ applications that support finger print readers.
 %apply_patches
 
 %build
-autoreconf -f -i
 %configure2_5x --disable-static
 %make
 pushd doc
