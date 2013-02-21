@@ -17,6 +17,7 @@ BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(nss)
 BuildRequires:	pkgconfig(udev)
 BuildRequires:	doxygen
+BuildRequires:	imagemagick-devel
 
 %description
 libfprint is an open source software library designed to make it easy for
