@@ -1,10 +1,10 @@
-%define major 0
-%define libname %mklibname fprint %{major}
-%define libnamedevel %mklibname -d fprint
+%define	major	0
+%define	libname	%mklibname fprint %{major}
+%define	devname	%mklibname -d fprint
 
 Name:		libfprint
 Version:	0.5.0
-Release:	1
+Release:	2
 Summary:	Library for adding support for consumer fingerprint readers
 License:	LGPLv2+
 Group:		System/Libraries
@@ -17,7 +17,7 @@ BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(nss)
 BuildRequires:	pkgconfig(udev)
 BuildRequires:	doxygen
-BuildRequires:	imagemagick-devel
+BuildRequires:	pkgconfig(MagickCore)
 
 %description
 libfprint is an open source software library designed to make it easy for
@@ -38,31 +38,31 @@ Features:
 
 #--------------------------------------------------------------------
 
-%package -n %{libname}
+%package -n	%{libname}
 License:	GPL
 Group:		System/Libraries
 Summary:	Library for adding support for consumer fingerprint readers
 Provides:	%{name} = %{version}-%{release}
 
-%description -n %{libname}
+%description -n	%{libname}
 libfprint is an open source software library designed to make it easy for
 application developers to add support for consumer fingerprint readers to their
 software.
 
-%files -n %{libname}
+%files -n	%{libname}
 %{_libdir}/libfprint.so.%{major}*
 %{_udevrulesdir}/60-fprint-autosuspend.rules
 
 #--------------------------------------------------------------------
 
-%package -n %{libnamedevel}
+%package -n	%{devname}
 License:	GPL
 Group:		System/Libraries
 Summary:	Development library for adding support for consumer fingerprint readers
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n %{libnamedevel}
+%description -n	%{devname}
 libfprint is an open source software library designed to make it easy for
 application developers to add support for consumer fingerprint readers to their
 software.
@@ -70,7 +70,7 @@ software.
 This package includes the headers and development library for building
 applications that support finger print readers.
 
-%files -n %{libnamedevel}
+%files -n	%{devname}
 %{_includedir}/libfprint
 %{_libdir}/libfprint.so
 %{_libdir}/pkgconfig/libfprint.pc
@@ -87,7 +87,6 @@ applications that support finger print readers.
 pushd doc
 make docs
 popd
-
 
 %install
 %makeinstall_std
@@ -151,5 +150,3 @@ popd
 + Revision: 116482
 - Buildrequire openssl-devel
 - import libfprint
-
-
