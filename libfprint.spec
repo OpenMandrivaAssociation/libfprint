@@ -50,7 +50,8 @@ software.
 
 %files -n	%{libname}
 %{_libdir}/libfprint.so.%{major}*
-%{_udevrulesdir}/60-fprint-autosuspend.rules
+/lib/udev/rules.d/60-fprint-autosuspend.rules
+
 
 %package -n	%{devname}
 License:	GPLv2
