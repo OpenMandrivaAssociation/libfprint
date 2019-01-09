@@ -4,8 +4,8 @@
 
 Summary:	Library for adding support for consumer fingerprint readers
 Name:		libfprint
-Version:	0.5.0
-Release:	11
+Version:	0.6.0
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
