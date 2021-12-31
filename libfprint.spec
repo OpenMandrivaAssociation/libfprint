@@ -19,6 +19,7 @@ BuildRequires:	pkgconfig(MagickCore)
 BuildRequires:	pkgconfig(nss)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(udev)
+BuildRequires:	pkgconfig(pixman-1)
 
 %description
 libfprint is an open source software library designed to make it easy for
