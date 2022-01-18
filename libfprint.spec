@@ -11,21 +11,21 @@ Group:		System/Libraries
 Url:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
 Source0:	https://gitlab.freedesktop.org/libfprint/libfprint/-/archive/v%{version}/libfprint-v%{version}.tar.bz2
 
-BuildRequires:	doxygen
+BuildRequires: doxygen
 BuildRequires: meson
 BuildRequires: gtk-doc
-BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
-BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gthread-2.0)
-BuildRequires:	pkgconfig(MagickCore)
+BuildRequires: pkgconfig(MagickCore)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(gusb)
 BuildRequires: pkgconfig(gudev-1.0)
-BuildRequires:	pkgconfig(nss)
-BuildRequires:	pkgconfig(openssl)
-BuildRequires:	pkgconfig(udev)
-BuildRequires:	pkgconfig(pixman-1)
+BuildRequires: pkgconfig(nss)
+BuildRequires: pkgconfig(openssl)
+BuildRequires: pkgconfig(udev)
+BuildRequires: pkgconfig(pixman-1)
 
 %description
 libfprint is an open source software library designed to make it easy for
@@ -78,7 +78,7 @@ applications that support finger print readers.
 
 %prep
 %setup -q
-%autopatch -p1
+%autopatch -n %{name}-%{version} -p1
 
 %build
 %meson
