@@ -4,18 +4,24 @@
 
 Summary:	Library for adding support for consumer fingerprint readers
 Name:		libfprint
-Version:	0.6.0
+Version:	1.94.2
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
-Source0:	http://people.freedesktop.org/~hadess/%{name}-%{version}.tar.xz
+Source0:	https://gitlab.freedesktop.org/libfprint/libfprint/-/archive/v%{version}/libfprint-v%{version}.tar.bz2
 
 BuildRequires:	doxygen
+BuildRequires: meson
+BuildRequires: gtk-doc
 BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
 BuildRequires:	pkgconfig(glib-2.0)
-BuildRequires:	pkgconfig(libusb)
+BuildRequires: pkgconfig(gthread-2.0)
 BuildRequires:	pkgconfig(MagickCore)
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: pkgconfig(gusb)
+BuildRequires: pkgconfig(gudev-1.0)
 BuildRequires:	pkgconfig(nss)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(udev)
@@ -75,12 +81,8 @@ applications that support finger print readers.
 %autopatch -p1
 
 %build
-%configure2_5x --disable-static
-%make
-pushd doc
-make docs
-popd
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
