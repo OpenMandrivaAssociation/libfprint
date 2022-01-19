@@ -56,8 +56,8 @@ application developers to add support for consumer fingerprint readers to their
 software.
 
 %files -n	%{libname}
-%{_libdir}/libfprint.so.%{major}*
-/lib/udev/rules.d/60-fprint-autosuspend.rules
+#{_libdir}/libfprint.so.%{major}*
+#/lib/udev/rules.d/60-fprint-autosuspend.rules
 
 
 %package -n	%{devname}
