@@ -1,6 +1,7 @@
 %define	major 2
 %define	libname	%mklibname fprint %{major}
 %define	devname	%mklibname -d fprint
+%define  girname  %mklibname fprint-gir 2.0
 
 Summary:	Library for adding support for consumer fingerprint readers
 Name:		libfprint
@@ -56,8 +57,9 @@ application developers to add support for consumer fingerprint readers to their
 software.
 
 %files -n	%{libname}
-#{_libdir}/libfprint.so.%{major}*
-#/lib/udev/rules.d/60-fprint-autosuspend.rules
+%{_libdir}/libfprint-2.so.%{major}*
+/lib/udev/hwdb.d/60-autosuspend-libfprint-2.hwdb
+/lib/udev/rules.d/70-libfprint-2.rules
 
 
 %package -n	%{devname}
@@ -65,6 +67,7 @@ License:	GPLv2
 Group:		System/Libraries
 Summary:	Development library for adding support for consumer fingerprint readers
 Requires:	%{libname} = %{version}-%{release}
+Requires:   %{girname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{devname}
@@ -72,9 +75,22 @@ This package includes the headers and development library for building
 applications that support finger print readers.
 
 %files -n	%{devname}
-#{_includedir}/libfprint
-#{_libdir}/libfprint.so
-#{_libdir}/pkgconfig/libfprint.pc
+%{_includedir}/libfprint-2
+%{_libdir}/libfprint-2.so
+%{_libdir}/pkgconfig/libfprint-2.pc
+%{_datadir}/gtk-doc/html/libfprint-2/
+%{_datadir}/gir-1.0/FPrint-2.0.gir
+
+%package -n     %{girname}
+Summary: GObject Introspection interface description for %{name}
+Group:   System/Libraries
+
+%description -n %{girname}
+GObject Introspection interface description for %{name}.
+
+%files -n %{girname}
+%{_libdir}/girepository-1.0/FPrint-2.0.typelib
+
 
 %prep
 %autosetup -n %{name}-v%{version} -p1
