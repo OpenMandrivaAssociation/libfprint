@@ -1,25 +1,32 @@
-%define	major	0
+%define	major 2
 %define	libname	%mklibname fprint %{major}
 %define	devname	%mklibname -d fprint
+%define  girname  %mklibname fprint-gir 2.0
 
 Summary:	Library for adding support for consumer fingerprint readers
 Name:		libfprint
-Version:	0.6.0
+Version:	1.94.2
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
-Source0:	http://people.freedesktop.org/~hadess/%{name}-%{version}.tar.xz
+Source0:	https://gitlab.freedesktop.org/libfprint/libfprint/-/archive/v%{version}/libfprint-v%{version}.tar.bz2
 
-BuildRequires:	doxygen
-BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
-BuildRequires:	pkgconfig(glib-2.0)
-BuildRequires:	pkgconfig(libusb)
-BuildRequires:	pkgconfig(MagickCore)
-BuildRequires:	pkgconfig(nss)
-BuildRequires:	pkgconfig(openssl)
-BuildRequires:	pkgconfig(udev)
-BuildRequires:	pkgconfig(pixman-1)
+BuildRequires: doxygen
+BuildRequires: meson
+BuildRequires: gtk-doc
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(gthread-2.0)
+BuildRequires: pkgconfig(MagickCore)
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: pkgconfig(gusb)
+BuildRequires: pkgconfig(gudev-1.0)
+BuildRequires: pkgconfig(nss)
+BuildRequires: pkgconfig(openssl)
+BuildRequires: pkgconfig(udev)
+BuildRequires: pkgconfig(pixman-1)
 
 %description
 libfprint is an open source software library designed to make it easy for
@@ -50,8 +57,9 @@ application developers to add support for consumer fingerprint readers to their
 software.
 
 %files -n	%{libname}
-%{_libdir}/libfprint.so.%{major}*
-/lib/udev/rules.d/60-fprint-autosuspend.rules
+%{_libdir}/libfprint-2.so.%{major}*
+/lib/udev/hwdb.d/60-autosuspend-libfprint-2.hwdb
+/lib/udev/rules.d/70-libfprint-2.rules
 
 
 %package -n	%{devname}
@@ -59,6 +67,7 @@ License:	GPLv2
 Group:		System/Libraries
 Summary:	Development library for adding support for consumer fingerprint readers
 Requires:	%{libname} = %{version}-%{release}
+Requires:   %{girname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{devname}
@@ -66,21 +75,29 @@ This package includes the headers and development library for building
 applications that support finger print readers.
 
 %files -n	%{devname}
-%{_includedir}/libfprint
-%{_libdir}/libfprint.so
-%{_libdir}/pkgconfig/libfprint.pc
+%{_includedir}/libfprint-2
+%{_libdir}/libfprint-2.so
+%{_libdir}/pkgconfig/libfprint-2.pc
+%{_datadir}/gtk-doc/html/libfprint-2/
+%{_datadir}/gir-1.0/FPrint-2.0.gir
+
+%package -n     %{girname}
+Summary: GObject Introspection interface description for %{name}
+Group:   System/Libraries
+
+%description -n %{girname}
+GObject Introspection interface description for %{name}.
+
+%files -n %{girname}
+%{_libdir}/girepository-1.0/FPrint-2.0.typelib
+
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -n %{name}-v%{version} -p1
 
 %build
-%configure2_5x --disable-static
-%make
-pushd doc
-make docs
-popd
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
