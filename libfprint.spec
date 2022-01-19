@@ -77,8 +77,7 @@ applications that support finger print readers.
 %{_libdir}/pkgconfig/libfprint.pc
 
 %prep
-%setup -q
-%autopatch -n %{name}-%{version} -p1
+%autosetup -n %{name}-v%{version} -p1
 
 %build
 %meson
