@@ -72,9 +72,9 @@ This package includes the headers and development library for building
 applications that support finger print readers.
 
 %files -n	%{devname}
-%{_includedir}/libfprint
-%{_libdir}/libfprint.so
-%{_libdir}/pkgconfig/libfprint.pc
+#{_includedir}/libfprint
+#{_libdir}/libfprint.so
+#{_libdir}/pkgconfig/libfprint.pc
 
 %prep
 %autosetup -n %{name}-v%{version} -p1
