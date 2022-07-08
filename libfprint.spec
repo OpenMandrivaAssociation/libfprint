@@ -5,8 +5,8 @@
 
 Summary:	Library for adding support for consumer fingerprint readers
 Name:		libfprint
-Version:	1.94.3
-Release:	2
+Version:	1.94.4
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
@@ -58,8 +58,8 @@ software.
 
 %files -n	%{libname}
 %{_libdir}/libfprint-2.so.%{major}*
-/lib/udev/hwdb.d/60-autosuspend-libfprint-2.hwdb
-/lib/udev/rules.d/70-libfprint-2.rules
+%{_prefix}/lib/udev/hwdb.d/60-autosuspend-libfprint-2.hwdb
+%{_prefix}/lib/udev/rules.d/70-libfprint-2.rules
 
 
 %package -n	%{devname}
