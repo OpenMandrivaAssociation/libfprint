@@ -6,7 +6,7 @@
 Summary:	Library for adding support for consumer fingerprint readers
 Name:		libfprint
 Version:	1.94.4
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
@@ -27,6 +27,7 @@ BuildRequires: pkgconfig(nss)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(pixman-1)
+BuildRequires: systemd-rpm-macros
 
 %description
 libfprint is an open source software library designed to make it easy for
@@ -45,24 +46,23 @@ Features:
     * Supports enrollment/verification - enrolling a print from a known user,
       and then later comparing a live scan to the enrolled print 
 
-%package -n	%{libname}
+%package -n %{libname}
 License:	GPLv2
 Group:		System/Libraries
 Summary:	Library for adding support for consumer fingerprint readers
 Provides:	%{name} = %{version}-%{release}
 
-%description -n	%{libname}
+%description -n %{libname}
 libfprint is an open source software library designed to make it easy for
 application developers to add support for consumer fingerprint readers to their
 software.
 
-%files -n	%{libname}
+%files -n %{libname}
 %{_libdir}/libfprint-2.so.%{major}*
-%{_prefix}/lib/udev/hwdb.d/60-autosuspend-libfprint-2.hwdb
-%{_prefix}/lib/udev/rules.d/70-libfprint-2.rules
+%{_udevhwdbdir}/*.hwdb
+%{_udevrulesdir}/*.rules
 
-
-%package -n	%{devname}
+%package -n %{devname}
 License:	GPLv2
 Group:		System/Libraries
 Summary:	Development library for adding support for consumer fingerprint readers
@@ -70,11 +70,11 @@ Requires:	%{libname} = %{version}-%{release}
 Requires:   %{girname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n	%{devname}
+%description -n %{devname}
 This package includes the headers and development library for building
 applications that support finger print readers.
 
-%files -n	%{devname}
+%files -n %{devname}
 %{_includedir}/libfprint-2
 %{_libdir}/libfprint-2.so
 %{_libdir}/pkgconfig/libfprint-2.pc
@@ -91,12 +91,13 @@ GObject Introspection interface description for %{name}.
 %files -n %{girname}
 %{_libdir}/girepository-1.0/FPrint-2.0.typelib
 
-
 %prep
 %autosetup -n %{name}-v%{version} -p1
 
 %build
-%meson
+%meson \
+	-Ddrivers=all
+
 %meson_build
 
 %install
