@@ -5,15 +5,14 @@
 
 Summary:	Library for adding support for consumer fingerprint readers
 Name:		libfprint
-Version:	1.94.5
-Release:	2
+Version:	1.94.7
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
 Source0:	https://gitlab.freedesktop.org/libfprint/libfprint/-/archive/v%{version}/libfprint-v%{version}.tar.bz2
 
 BuildRequires: doxygen
-BuildRequires: meson
 BuildRequires: gtk-doc
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(glib-2.0)
@@ -28,6 +27,8 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: systemd-rpm-macros
+BuildSystem:   meson
+BuildOption:   -Ddrivers=all
 
 %description
 libfprint is an open source software library designed to make it easy for
@@ -91,14 +92,5 @@ GObject Introspection interface description for %{name}.
 %files -n %{girname}
 %{_libdir}/girepository-1.0/FPrint-2.0.typelib
 
-%prep
-%autosetup -n %{name}-v%{version} -p1
-
-%build
-%meson \
-	-Ddrivers=all
-
-%meson_build
-
-%install
-%meson_install
+%install -a
+rm -rf %{buildroot}%{_datadir}/installed-tests %{buildroot}%{_libexecdir}/installed-tests
