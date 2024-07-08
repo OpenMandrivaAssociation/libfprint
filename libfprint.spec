@@ -26,9 +26,12 @@ BuildRequires: pkgconfig(nss)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(pixman-1)
+BuildRequires: python
+BuildRequires: python%{pyver}dist(pygobject)
 BuildRequires: systemd-rpm-macros
 BuildSystem:   meson
 BuildOption:   -Ddrivers=all
+BuildOption:   -Dinstalled-tests=false
 
 %description
 libfprint is an open source software library designed to make it easy for
@@ -91,6 +94,3 @@ GObject Introspection interface description for %{name}.
 
 %files -n %{girname}
 %{_libdir}/girepository-1.0/FPrint-2.0.typelib
-
-%install -a
-rm -rf %{buildroot}%{_datadir}/installed-tests %{buildroot}%{_libexecdir}/installed-tests
