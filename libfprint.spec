@@ -9,7 +9,7 @@ Version:	1.94.8
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
-Url:		http://www.freedesktop.org/wiki/Software/fprint/libfprint
+Url:		https://www.freedesktop.org/wiki/Software/fprint/libfprint
 Source0:	https://gitlab.freedesktop.org/libfprint/libfprint/-/archive/v%{version}/libfprint-v%{version}.tar.bz2
 
 BuildRequires: doxygen
